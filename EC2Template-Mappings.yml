@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: > 
+  "Template to launch an EC2 instance"
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: "awesome-key-east1"
+      Tags: 
+        - Key: "Name"
+          Value: "myEC2Instance"
+      ImageId: !FindInMap [RegionAndAmiFamily, !Ref "AWS::Region", !Ref AmiFamily]
+
+Parameters: 
+    AmiFamily: 
+      Description: The AMI family
+      Type: String
+      Default: linux
+      AllowedValues: 
+        - linux
+        - ubuntu
+      ConstraintDescription: must be a linux or ubuntu
+
+Mappings: 
+  RegionAndAmiFamily: 
+    us-west-2: 
+      linux: "ami-04e914639d0cca79a"
+      ubuntu: "ami-0fcf52bcf5db7b003"
+    us-east-1: 
+      linux: "ami-0889a44b331db0194"
+      ubuntu: "ami-007855ac798b5175e"

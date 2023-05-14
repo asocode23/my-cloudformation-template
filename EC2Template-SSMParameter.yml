@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: > 
+  "Template to launch an EC2 instance"
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceTypeParameter
+      ImageId: ami-0889a44b331db0194
+      KeyName: "awesome-key-east1"
+      Tags: 
+        - Key: "Name"
+          Value: "myEC2Instance"
+      SecurityGroupIds:
+        - "sg-0184ebeb49f50fac0"
+      SubnetId: "subnet-064ad37e3b8a7d672"
+Parameters:
+  InstanceTypeParameter:
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: /myEC2Instance/type
